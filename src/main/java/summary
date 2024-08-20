@@ -1,0 +1,12 @@
+1. jsp의 form에서 사용자가 입력한 정보를 action="action="/phonebook3/update"로 전송한다.
+
+2. Controller에서 @ModelAttribute PersonVo personVo를 사용하면,
+   사용자가 입력한 name, hp, company 정보가 자동으로 PersonVo 객체에 바인딩 된다.
+   이때 HTML 폼의 name 속성 값이 PersonVo 클래스의 필드와 일치해야 한다.
+
+3. Controller에서 int count = phonebookDao.updatePerson(personVo);가 실행되면, 
+  2번 과정에서 바인딩된 PersonVo 객체를 DAO(Data Access Object) 클래스에 전달한다.
+  DAO는 이 객체의 데이터를 사용하여 데이터베이스 작업을 수행한다.
+
+4. DAO에서 데이터베이스 작업이 완료되면 결과를 Controller에 반환한다.
+   그러면 Controller에서 return "redirect:/list"; 리다이렉트를 수행한다.
