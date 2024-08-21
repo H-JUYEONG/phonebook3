@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.javaex.dao.PhonebookDao;
+import com.javaex.service.PhonebookService;
 import com.javaex.vo.PersonVo;
 
 @Controller
@@ -18,9 +18,10 @@ import com.javaex.vo.PersonVo;
 public class PhonebookController {
 
 	// 필드
-	// dao를 메모리에 올린다
-	@Autowired
-	private PhonebookDao phonebookDao;
+
+	
+	@Autowired // @Autowired는 객체 생성을 해준다(메모리에 올린다)
+	private PhonebookService phonebookService;
 	// 생성자
 	// 메소드 gs
 	// 메소드 일반
@@ -31,12 +32,9 @@ public class PhonebookController {
 
 		System.out.println("PhonebookController.list()");
 
-		// phonebookDao의 메소드를 이용하여 데이터를 가져온다
-		List<PersonVo> personList = phonebookDao.getPersonList();
-		System.out.println(personList);
-
+		List<PersonVo> personList = phonebookService.exeGetPerson();
 		model.addAttribute("personList", personList);
-
+		
 		// return "/WEB-INF/views/list.jsp";
 		return "list";
 	}
@@ -57,8 +55,10 @@ public class PhonebookController {
 		System.out.println("PhonebookController.write()");
 
 		// phonebookDao 메소드를 활용해 데이터를 등록한다
-		int count = phonebookDao.insertPerson(personVo);
-		System.out.println(count);
+		// int count = phonebookDao.insertPerson(personVo);
+		// System.out.println(count);
+		
+		phonebookService.exeWritePerson(personVo);
 
 		// 리스트로 리다이렉트
 		// http://localhost:8888/phonebook3/write?name=aaa&hp=123&company=02
@@ -72,8 +72,7 @@ public class PhonebookController {
 		System.out.println("PhonebookController.editform()");
 
 		// 수정할 사람의 정보 가져와서 담기
-	    PersonVo personVo = phonebookDao.getPersonOne(no);
-	    System.out.println(personVo);
+	    PersonVo personVo = phonebookService.exePersonEditForm(no);
 
 	    // JSP로 데이터 전달
 	    model.addAttribute("personVo", personVo);
@@ -88,9 +87,7 @@ public class PhonebookController {
 
 		System.out.println("PhonebookController.update()");
 
-		// phonebookDao 메소드를 활용해 데이터를 등록한다
-		int count = phonebookDao.updatePerson(personVo);
-		System.out.println(count);
+		phonebookService.exePersonUpdate(personVo);
 
 		// 리스트로 리다이렉트
 		return "redirect:/list";
@@ -102,9 +99,7 @@ public class PhonebookController {
 
 		System.out.println("PhonebookController.delete()");
 
-		// phonebookDao 메소드를 활용해 데이터를 삭제한다
-		int count = phonebookDao.deletePerson(no);
-		System.out.println(count);
+		phonebookService.exePersonDelete(no);
 
 		return "redirect:/list";
 	}

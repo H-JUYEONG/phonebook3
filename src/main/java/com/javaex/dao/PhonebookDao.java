@@ -8,13 +8,19 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.javaex.vo.PersonVo;
 
 @Repository
 public class PhonebookDao {
+	
 	// 필드
+	@Autowired
+	private SqlSession sqlSession;
+	
 	private Connection conn = null;
 	private PreparedStatement pstmt = null;
 	private ResultSet rs = null;
@@ -68,35 +74,8 @@ public class PhonebookDao {
 
 	// 사랑 정보 삭제하기 1명
 	public int deletePerson(int no) {
-
-		System.out.println("deletePerson()");
-		System.out.println(no);
-		int count = -1;
-
-		this.getConnection();
-
-		try {
-			// 3. SQL문 준비 / 바인딩 / 실행
-			// *SQL문 준비
-			String query = "";
-			query += " delete from person ";
-			query += " where person_id = ? ";
-
-			// *바인딩
-			pstmt = conn.prepareStatement(query);
-			pstmt.setInt(1, no);
-
-			// *실행
-			count = pstmt.executeUpdate();
-
-			// 4.결과처리
-			System.out.println(count + "건 삭제");
-
-		} catch (SQLException e) {
-			System.out.println("error:" + e);
-		}
-
-		this.close();
+		
+		int count = sqlSession.delete("phonebook.delete", no);
 
 		return count;
 	}

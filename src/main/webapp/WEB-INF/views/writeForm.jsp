@@ -34,7 +34,7 @@
 
 	<br>
 	<br>
-	<a href="">리스트로 가기</a>
+	<a href="/phonebook3/list">리스트로 가기</a>
 
 
 </body>
