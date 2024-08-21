@@ -19,7 +19,6 @@ public class PhonebookController {
 
 	// 필드
 
-	
 	@Autowired // @Autowired는 객체 생성을 해준다(메모리에 올린다)
 	private PhonebookService phonebookService;
 	// 생성자
@@ -32,9 +31,9 @@ public class PhonebookController {
 
 		System.out.println("PhonebookController.list()");
 
-		List<PersonVo> personList = phonebookService.exeGetPerson();
+		List<PersonVo> personList = phonebookService.exeGetPersonList();
 		model.addAttribute("personList", personList);
-		
+
 		// return "/WEB-INF/views/list.jsp";
 		return "list";
 	}
@@ -57,7 +56,7 @@ public class PhonebookController {
 		// phonebookDao 메소드를 활용해 데이터를 등록한다
 		// int count = phonebookDao.insertPerson(personVo);
 		// System.out.println(count);
-		
+
 		phonebookService.exeWritePerson(personVo);
 
 		// 리스트로 리다이렉트
@@ -72,10 +71,10 @@ public class PhonebookController {
 		System.out.println("PhonebookController.editform()");
 
 		// 수정할 사람의 정보 가져와서 담기
-	    PersonVo personVo = phonebookService.exePersonEditForm(no);
+		PersonVo personVo = phonebookService.exeEditForm(no);
 
-	    // JSP로 데이터 전달
-	    model.addAttribute("personVo", personVo);
+		// JSP로 데이터 전달
+		model.addAttribute("personVo", personVo);
 
 		return "editForm";
 	}
@@ -104,17 +103,17 @@ public class PhonebookController {
 		return "redirect:/list";
 	}
 
+	/* 등록 */
 	/* 파라미터 1개씩 받을때 */
 	@RequestMapping(value = "/write2", method = { RequestMethod.GET, RequestMethod.POST })
-	public String write2(@RequestParam(value = "name") String name, @RequestParam(value = "hp") String hp,
-			@RequestParam(value = "company") String company) {
+	public String write2(@RequestParam(value = "name") String name, @RequestParam("hp") String hp,
+			@RequestParam("company") String company) {
+		System.out.println("PhonebookController.write2()");
 
-		System.out.println("PhonebookController.write()");
-
-		PersonVo personVo = new PersonVo(name, hp, company);
+		PersonVo personVo = new PersonVo();
 		System.out.println(personVo);
 
-		return "write";
+		return "";
 	}
 
 }

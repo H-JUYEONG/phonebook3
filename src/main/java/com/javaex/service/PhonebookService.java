@@ -14,17 +14,17 @@ public class PhonebookService {
 	@Autowired
 	private PhonebookDao phonebookDao;
 
-	/* 전화번호 전체 가져오기 */
-	public List<PersonVo> exeGetPerson() {
+	/* 전체 가져오기 */
+	public List<PersonVo> exeGetPersonList() {
 		
-		System.out.println("PhonebookService.exeGetPerson()");
+		System.out.println("PhonebookService.exeGetPersonList()");
 
 		List<PersonVo> personList = phonebookDao.getPersonList();
 
 		return personList;
 	}
 
-	/* 전화번호 등록 */
+	/* 등록 */
 	public int exeWritePerson(PersonVo personVo) {
 		
 		System.out.println("PhonebookService.exeWritePerson()");
@@ -34,7 +34,7 @@ public class PhonebookService {
 		return count;
 	}
 
-	/* 전화번호 삭제 */
+	/* 1개 삭제 */
 	public int exePersonDelete(int no) {
 		
 		System.out.println("PhonebookService.exePersonDelete()");
@@ -45,10 +45,10 @@ public class PhonebookService {
 
 	}
 	
-	/* 전화번호 수정폼 - 사람 정보 불러오기 */
-	public PersonVo exePersonEditForm(int no) {
+	/* 수정폼 - 사람 1명 정보 불러오기 */
+	public PersonVo exeEditForm(int no) {
 		
-		System.out.println("PhonebookService.exePersonEditForm()");
+		System.out.println("PhonebookService.exeEditForm()");
 
 		PersonVo personVo = phonebookDao.getPersonOne(no);
 
@@ -56,7 +56,7 @@ public class PhonebookService {
 
 	}
 	
-	/* 전화번호 수정 */
+	/* 수정 */
 	public int exePersonUpdate(PersonVo personVo) {
 		
 		System.out.println("PhonebookService.exePersonUpdate()");
