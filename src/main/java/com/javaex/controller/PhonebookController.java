@@ -1,6 +1,7 @@
 package com.javaex.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -64,7 +65,7 @@ public class PhonebookController {
 		return "redirect:/list";
 	}
 
-	/* 수정폼 */
+	/* 수정폼1 */
 	@RequestMapping(value = "/editform", method = { RequestMethod.GET, RequestMethod.POST })
 	public String editForm(@RequestParam(value = "no") int no, Model model) {
 
@@ -77,6 +78,19 @@ public class PhonebookController {
 		model.addAttribute("personVo", personVo);
 
 		return "editForm";
+	}
+	
+	/* 수정폼2 - DB에서 Map으로 데이터 보내줌 */
+	@RequestMapping(value = "/editform2", method = { RequestMethod.GET, RequestMethod.POST })
+	public String editForm2(@RequestParam(value = "no") int no, Model model) {
+
+		System.out.println("PhonebookController.editForm2()");
+		
+		Map<String, Object> personMap = phonebookService.exeEditForm2(no);
+
+		model.addAttribute("personMap", personMap);
+		
+		return "editForm2";
 	}
 
 	/* 수정 */
